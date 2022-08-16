@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-#-*-encoding: utf-8 -*_
+#-*-encoding: utf-8 -*-
+#cryptV1.2.0
 
 from tkinter import *
 from tkinter import filedialog
-from functions import crypt_text, decifrar_txt
+from src.functions import crypt_file, decrypt_file
 from sys import exit
 from PIL import ImageTk, Image
 
@@ -21,13 +22,13 @@ def explore():
 	)
 	
 def crypt():
-	if crypt_text(explore()):
+	if crypt_file(explore()):
 	    poppup("Archivo cifrado correctamente","green")
 	else:
 	    poppup("Error Inesperado","#F87474")
 
 def decrypt():
-	if decifrar_txt(explore()):
+	if decrypt_file(explore()):
 	    poppup("Archivo descifrado correctamente","yellow")
 	else:
 		poppup("Error Inesperado","#F87474")
@@ -46,7 +47,7 @@ btn_file_input_b = Button(root, text="Descifrar archivo", command=decrypt, bg="#
 label = Label(root, text="Creado por: Jorge L. Herrera Chavez").place(x=120, y=200)
 
 # img
-img = ImageTk.PhotoImage(Image.open("imgLogo.png"))
+img = ImageTk.PhotoImage(Image.open("assets/imgLogo.png"))
 
 imglabel = Label(root, image=img, bd=0).place(x=200, y=0)       
 

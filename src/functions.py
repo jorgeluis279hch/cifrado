@@ -5,16 +5,32 @@
 # created by Jorge L. Herrera
 
 from os import path
+from string import ascii_letters, digits, punctuation
+from sys import argv
 
-SECUENCIA = 2
+abc = ascii_letters + digits + punctuation
 
-def crypt_text(file):
+SECUENCE = 3
+
+
+def cryptAndDecrypt(char, mode):
+    index = abc.find(char)
+    if index == -1:
+        return char
+
+    if index >= len(abc) - SECUENCE:
+        total = index - len(abc)
+        return abc[total + SECUENCE] if mode else abc[total - SECUENCE]
+
+    else:
+        return abc[index + SECUENCE] if mode else abc[index - SECUENCE]
+
+
+def crypt_file(file):
     try:
         with open(file, "rt+") as f:
-            reader = f.read()
-
-            to_char = [ord(_) + SECUENCIA for _ in reader]
-            encrypt = ''.join([chr(_) for _ in to_char])
+            file_content = f.read()
+            encrypt = ''.join([cryptAndDecrypt(char, True) for char in file_content])
            
             f.seek(0)
             f.write(encrypt)
@@ -31,17 +47,14 @@ def crypt_text(file):
         print('Archivo no encontrado')
 
 
-def decifrar_txt(file):
+def decrypt_file(file):
     try:
         with open(file, "rt+") as f:
             reader = f.read()
-
-            to_char = [ord(_) - SECUENCIA for _ in reader]
-            encrypt = ''.join([chr(_) for _ in to_char])
-
+            decrypt = ''.join([cryptAndDecrypt(char, False) for char in reader])
            
             f.seek(0)
-            f.write(encrypt)
+            f.write(decrypt)
             f.truncate()
 
 
